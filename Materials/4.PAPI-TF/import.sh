@@ -1,5 +1,0 @@
-terraform init
-terraform import akamai_edge_hostname.jaescalo-tf-example-edgesuite-net ehn_5027553,ctr_1-1NC95D,grp_71960
-terraform import akamai_property.jaescalo_terraform-prod prp_772711,ctr_1-1NC95D,grp_71960,LATEST
-terraform import akamai_property_activation.jaescalo_terraform-prod-staging prp_772711:STAGING
-terraform import akamai_property_activation.jaescalo_terraform-prod-production prp_772711:PRODUCTION
