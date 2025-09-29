@@ -5,10 +5,10 @@ terraform {
       version = ">= 6.1.0"
     }
   }
-  required_version = ">= 1.2"
+  required_version = ">= 1.8"
 }
  
 provider "akamai" {
   edgerc         = "~/.edgerc"
-  config_section = "default"
+  config_section = "terraform"
 }
