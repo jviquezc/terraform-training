@@ -3,9 +3,7 @@ data "akamai_group" "my_group_id" {
     contract_id = "1-1NC95D"
 }
 
-output "my_group_id" {
-    value = data.akamai_group.my_group_id
-}
+
 
 
 
@@ -14,9 +12,7 @@ data "akamai_property" "my_property" {
   version = "2"
 }
 
-output "my_property" {
-  value = data.akamai_property.my_property
-}
+
 
 
 # from: https://techdocs.akamai.com/terraform/docs/common-identifiers
@@ -37,6 +33,4 @@ data "akamai_appsec_configuration" "my_configuration" {
     name = "jviquezc_KSD"
 }
 
-output "my_appsec_config" {
-  value = data.akamai_appsec_configuration.my_configuration
-}
+
