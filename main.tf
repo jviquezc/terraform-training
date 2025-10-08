@@ -19,6 +19,14 @@ output "my_property" {
 }
 
 
+# from: https://techdocs.akamai.com/terraform/docs/common-identifiers
+#data "akamai_groups" "my-groups" {
+#}
+#output "groups" {
+#value = data.akamai_groups.my-groups
+#} 
+
+
 #data "akamai_appsec_aap_selected_hostnames" "my_aap_selected_hostnames" {
 #  config_id          = 52638
 #  security_policy_id = "jviquezc_KSD"
