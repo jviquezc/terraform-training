@@ -4,16 +4,19 @@ resource "akamai_property" "property" {
   contract_id = "ctr_1-1NC95D"
   group_id    = "grp_19293"
 
-  hostnames {
-    cname_from             = "terraform-training-jviquezc4.com"
-    cname_to               = akamai_edge_hostname.my_edge_hostname.edge_hostname
-    cert_provisioning_type = "CPS_MANAGED"
+  dynamic "hostnames" {
+    for_each = local.app_hostnames
+    content {
+      cname_from             = hostnames.value       # e.g. www.example.com
+      cname_to               = "jviquezc4-terraform.edgekey.net" # your edge hostname
+      cert_provisioning_type = "CPS_MANAGED"
+    }
   }
 
   # Usa el mismo schema del builder
   rule_format = "v2023-01-05"
   # <<< usa el JSON generado por el builder >>>
-  rules       = data.local_file.rules.content
+  rules = data.local_file.rules.content
 }
 
 resource "akamai_cp_code" "my_cp_code" {
@@ -40,20 +43,20 @@ data "akamai_property_rules_builder" "my_default_rule" {
 
     behavior {
       origin {
-        origin_type         = "CUSTOMER"
-        hostname            = var.ab_test == "A" ? "origin-a.example.com" : "origin-b.example.com"
-        forward_host_header = "ORIGIN_HOSTNAME"
-        cache_key_hostname  = "REQUEST_HOST_HEADER"
-        compress            = true
+        origin_type           = "CUSTOMER"
+        hostname              = var.ab_test == "A" ? "origin-a.example.com" : "origin-b.example.com"
+        forward_host_header   = "ORIGIN_HOSTNAME"
+        cache_key_hostname    = "REQUEST_HOST_HEADER"
+        compress              = true
         enable_true_client_ip = false
-        http_port           = 80
+        http_port             = 80
       }
     }
 
     behavior {
       cp_code {
         value {
-          id   = tonumber(akamai_cp_code.my_cp_code.id)  # asegura tipo numérico
+          id   = tonumber(akamai_cp_code.my_cp_code.id) # asegura tipo numérico
           name = akamai_cp_code.my_cp_code.name
         }
       }
@@ -68,13 +71,13 @@ data "local_file" "rules" {
 
 // Change the network value to production for the production network
 resource "akamai_property_activation" "my_activation" {
-     property_id                    = akamai_property.property.id
-     network                        = "staging"
-     contact                        = ["jviquezc@akamai.com"]
-     note                           = "Sample activation"
-     version                        = "1"
-     auto_acknowledge_rule_warnings = true
-     timeouts {
-       default = "1h"
-     }
+  property_id                    = akamai_property.property.id
+  network                        = "staging"
+  contact                        = ["jviquezc@akamai.com"]
+  note                           = "Sample activation"
+  version                        = "1"
+  auto_acknowledge_rule_warnings = true
+  timeouts {
+    default = "1h"
+  }
 }

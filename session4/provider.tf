@@ -7,7 +7,7 @@ terraform {
   }
   required_version = ">= 1.8"
 }
- 
+
 provider "akamai" {
   config {
     client_secret = var.akamai_client_secret

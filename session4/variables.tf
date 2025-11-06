@@ -55,3 +55,8 @@ variable "akamai_account_key" {
 }
 
 
+variable "apps" {
+  description = "List of application subdomains"
+  type        = list(string)
+  default     = ["www", "api", "blog", "shop", "cdn"]
+}
